@@ -1,5 +1,36 @@
 # OpenStack CLI Cheat Sheet
 
+## Table of Contents
+1. [Common Commands](#common-commands)
+   - [General](#general)
+   - [Authentication](#authentication)
+   - [Identity (Keystone)](#identity-keystone)
+   - [Images (Glance)](#images-glance)
+   - [Compute (Nova)](#compute-nova)
+   - [Networking (Neutron)](#networking-neutron)
+   - [Block Storage (Cinder)](#block-storage-cinder)
+   - [Object Storage (Swift)](#object-storage-swift)
+2. [Troubleshooting Commands](#troubleshooting-commands)
+   - [General Troubleshooting](#general-troubleshooting)
+   - [Nova (Compute Service)](#nova-compute-service)
+   - [Neutron (Networking Service)](#neutron-networking-service)
+   - [Cinder (Block Storage Service)](#cinder-block-storage-service)
+   - [Keystone (Identity Service)](#keystone-identity-service)
+   - [Glance (Image Service)](#glance-image-service)
+   - [Heat (Orchestration Service)](#heat-orchestration-service)
+   - [Logs](#logs)
+   - [Networking Diagnostics](#networking-diagnostics)
+   - [Resource Clean-Up](#resource-clean-up)
+   - [Additional Tips](#additional-tips)
+3. [Formatting Tips](#formatting-tips)
+   - [General Formatting Options](#general-formatting-options)
+   - [Sorting](#sorting)
+   - [Filtering](#filtering)
+   - [Advanced Formatting](#advanced-formatting)
+   - [Tips for Efficiency](#tips-for-efficiency)
+
+---
+
 ## Common Commands
 
 ### General
