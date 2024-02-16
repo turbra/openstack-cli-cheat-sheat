@@ -163,3 +163,52 @@
 - **Help Option for Detailed Command Usage**
 - **Quota Checks with `openstack quota show`**
 - **Regular Service Health Checks**
+  
+---
+
+## Formatting Tips
+
+### General Formatting Options
+- **Fit-Width**: To ensure output fits the terminal width without wrapping.
+  ```bash
+  openstack <command> --fit-width
+  ```
+- **Select Columns**: Display only specified columns in the output.
+  ```bash
+  openstack <command> -c COLUMN1 -c COLUMN2
+  # or
+  openstack <command> --column COLUMN1 --column COLUMN2
+  ```
+- **Output Format**: Display output in different formats like JSON, YAML, or table (default).
+  ```bash
+  openstack <command> -f json
+  openstack <command> -f yaml
+  openstack <command> -f table
+  ```
+- **No Headers**: Hide the table header row in output.
+  ```bash
+  openstack <command> --no-header
+  ```
+
+### Sorting
+- **Sort Output**: Sort output by a specific column.
+  ```bash
+  openstack <command> --sort-column COLUMN_NAME
+  ```
+
+### Filtering
+- **Filter Output**: Use the `grep` command to filter output.
+  ```bash
+  openstack <command> | grep 'filter-term'
+  ```
+- **Combining Commands**: Chain commands with Unix pipes for complex filtering.
+  ```bash
+  openstack <command> | grep 'filter-term' | awk '{print $1}'
+  ```
+
+### Advanced Formatting
+- **Custom Scripts**: For complex formatting, consider using custom scripts that parse JSON or YAML output.
+
+### Tips for Efficiency
+- **Aliases**: Create shell aliases for commonly used commands with specific formatting.
+- **Scripts**: Write shell scripts for complex or frequently used command sequences.
