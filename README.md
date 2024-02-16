@@ -117,6 +117,21 @@
   openstack volume list
   openstack server add volume INSTANCE_ID VOLUME_ID
   ```
+- **Additional volumes are attached post-creation**
+
+1. **Create the Instance with the Boot Volume**:
+   - The boot volume contains the operating system and is specified in the `server create` command.
+   ```bash
+   openstack server create --image IMAGE --flavor FLAVOR --volume BOOT_VOLUME_NAME INSTANCE_NAME
+   ```
+
+2. **Attach Additional Volumes After the Instance is Created**:
+   - Once the instance is up and running, you can attach additional volumes using the `openstack server add volume` command.
+   ```bash
+   openstack server add volume INSTANCE_NAME ADDITIONAL_VOLUME_NAME_1
+   openstack server add volume INSTANCE_NAME ADDITIONAL_VOLUME_NAME_2
+   # Repeat for as many additional volumes as you have
+   ```
 
 ### Object Storage (Swift)
 - **Display Information, List Containers**
