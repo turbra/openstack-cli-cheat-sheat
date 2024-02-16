@@ -140,7 +140,9 @@ openstack server create \
     --image $IMAGE \
     --port $PORT \
     --block-device uuid=006efd7a-48a8-4c75-bafb-6b483199d284,source_type=volume,destination_type=volume \
-    --wait tes
+    --wait test-server
+```
+
 ### Object Storage (Swift)
 - **Display Information, List Containers**
   ```bash
