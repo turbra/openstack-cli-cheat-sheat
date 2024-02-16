@@ -132,7 +132,15 @@
    openstack server add volume INSTANCE_NAME ADDITIONAL_VOLUME_NAME_2
    # Repeat for as many additional volumes as you have
    ```
-
+   
+- **Create an instance, specifying the volume as a block device to attach**
+```bash
+openstack server create \
+    --flavor $FLAVOR \
+    --image $IMAGE \
+    --port $PORT \
+    --block-device uuid=006efd7a-48a8-4c75-bafb-6b483199d284,source_type=volume,destination_type=volume \
+    --wait tes
 ### Object Storage (Swift)
 - **Display Information, List Containers**
   ```bash
