@@ -1,207 +1,165 @@
 # OpenStack CLI Cheat Sheet
 
 ## Common Commands
-#### General
+
+### General
 - **List Available Commands**
   ```bash
   openstack --help
   ```
 
-#### Authentication
+### Authentication
 - **Set Environment Variables**
   ```bash
   source openrc.sh
   ```
 
-#### Compute (Nova)
-- **List All Instances**
+### Identity (Keystone)
+- **List All Users**
+  ```bash
+  openstack user list
+  ```
+- **List Identity Service Catalog**
+  ```bash
+  openstack catalog list
+  ```
+
+### Images (Glance)
+- **List Images You Can Access**
+  ```bash
+  openstack image list
+  ```
+- **Delete Specified Image**
+  ```bash
+  openstack image delete IMAGE
+  ```
+- **Describe a Specific Image**
+  ```bash
+  openstack image show IMAGE
+  ```
+- **Update Image**
+  ```bash
+  openstack image set IMAGE
+  ```
+- **Upload Kernel, RAM, Three-Part, and Raw Images**
+  ```bash
+  # Various commands for uploading different types of images
+  ```
+
+### Compute (Nova)
+- **List Instances, Check Status of Instance**
   ```bash
   openstack server list
   ```
-- **Create an Instance**
+- **Create a Flavor Named m1.tiny**
   ```bash
-  openstack server create --flavor <flavor> --image <image> --key-name <keypair> --network <network> <server-name>
-  ```
-- **Delete an Instance**
-  ```bash
-  openstack server delete <server-name>
+  openstack flavor create --ram 512 --disk 1 --vcpus 1 m1.tiny
   ```
 - **List Flavors**
   ```bash
   openstack flavor list
   ```
-- **List Images**
+- **Boot an Instance Using Flavor and Image Names**
   ```bash
-  openstack image list
+  openstack server create --image IMAGE --flavor FLAVOR INSTANCE_NAME
+  ```
+- **Log in to the Instance, Show Details, View Console Log, Set Metadata, Create Snapshot**
+  ```bash
+  # Various commands for managing instances
   ```
 
-#### Networking (Neutron)
-- **List Networks**
+### Networking (Neutron)
+- **Create Network, Create a Subnet**
   ```bash
-  openstack network list
-  ```
-- **Create a Network**
-  ```bash
-  openstack network create <network-name>
-  ```
-- **Create a Subnet**
-  ```bash
-  openstack subnet create --network <network-name> --subnet-range <cidr> <subnet-name>
-  ```
-- **List Ports**
-  ```bash
-  openstack port list
-  ```
-- **List Routers**
-  ```bash
-  openstack router list
+  openstack network create NETWORK_NAME
+  openstack subnet create --subnet-pool SUBNET --network NETWORK SUBNET_NAME
   ```
 
-#### Block Storage (Cinder)
-- **List Volumes**
+### Block Storage (Cinder)
+- **Create a New Volume, Boot Instance and Attach to Volume**
+  ```bash
+  openstack volume create --size SIZE_IN_GB NAME
+  openstack server create --image IMAGE --flavor FLAVOR --volume VOLUME_NAME INSTANCE_NAME
+  ```
+- **List Volumes, Attach/Detach a Volume**
   ```bash
   openstack volume list
-  ```
-- **Create a Volume**
-  ```bash
-  openstack volume create --size <size-in-gb> <volume-name>
-  ```
-- **Delete a Volume**
-  ```bash
-  openstack volume delete <volume-name>
-  ```
-- **Attach a Volume to an Instance**
-  ```bash
-  openstack server add volume <server-name> <volume-name>
-  ```
-- **Detach a Volume from an Instance**
-  ```bash
-  openstack server remove volume <server-name> <volume-name>
+  openstack server add volume INSTANCE_ID VOLUME_ID
   ```
 
-#### Identity (Keystone)
-- **List Projects**
+### Object Storage (Swift)
+- **Display Information, List Containers**
   ```bash
-  openstack project list
-  ```
-- **List Users**
-  ```bash
-  openstack user list
+  swift stat
+  swift list
   ```
 
-#### Image Service (Glance)
-- **List Images**
-  ```bash
-  openstack image list
-  ```
-- **Create an Image**
-  ```bash
-  openstack image create --file <file-path> --disk-format qcow2 --container-format bare <image-name>
-  ```
-- **Delete an Image**
-  ```bash
-  openstack image delete <image-name>
-  ```
-
-#### Orchestration (Heat)
-- **List Stacks**
-  ```bash
-  openstack stack list
-  ```
-- **Create a Stack**
-  ```bash
-  openstack stack create -t <template-file> <stack-name>
-  ```
-- **Delete a Stack**
-  ```bash
-  openstack stack delete <stack-name>
-  ```
-----
+---
 
 ## Troubleshooting Commands
-#### General
-- **Show OpenStack Client Version**
+
+### General Troubleshooting
+- **Show OpenStack Client Version, Service List and Status**
   ```bash
   openstack --version
-  ```
-- **List Services and Their Status**
-  ```bash
   openstack service list
   ```
 
-#### Nova (Compute Service)
+### Nova (Compute Service)
 - **Show Instance Details for Troubleshooting**
   ```bash
   openstack server show <server-name>
   ```
-- **List Failed Compute Services**
-  ```bash
-  openstack compute service list --service nova-compute --long
-  ```
 
-#### Neutron (Networking Service)
-- **Check Network Agent List and Status**
+### Neutron (Networking Service)
+- **Network Agent List and Status, Specific Network Details**
   ```bash
   openstack network agent list
-  ```
-- **Show Details of a Specific Network**
-  ```bash
   openstack network show <network-name>
   ```
-- **Debug a Port (e.g., on a VM)**
-  ```bash
-  openstack port show <port-id>
-  ```
 
-#### Cinder (Block Storage Service)
+### Cinder (Block Storage Service)
 - **Show Volume Details**
   ```bash
   openstack volume show <volume-name>
   ```
-- **List All Failed Cinder Services**
-  ```bash
-  openstack volume service list
-  ```
 
-#### Keystone (Identity Service)
-- **Validate Tokens**
+### Keystone (Identity Service)
+- **Token Validation**
   ```bash
   openstack token issue
   ```
 
-#### Glance (Image Service)
-- **Show Image Details**
+### Glance (Image Service)
+- **Image Details**
   ```bash
   openstack image show <image-name>
   ```
 
-#### Heat (Orchestration Service)
-- **Show Stack Events for Debugging**
+### Heat (Orchestration Service)
+- **Stack Events and Details**
   ```bash
-  openstack stack event list <stack-name>
+  openstack stack event list/show <stack-name>
   ```
 
-#### Logs
-- **View and Tail Logs**: Logs for each service (like Nova, Neutron, Cinder, etc.) are usually located in `/var/log/<service-name>/`. Tail the logs for real-time troubleshooting.
+### Logs
+- **View and Tail Logs**
   ```bash
-  tail -f /var/log/nova/nova-api.log
+  tail -f /var/log/<service-name>/<log-file>
   ```
 
-#### Networking
-- **Ping Test**: Use ping to check connectivity between instances, or from an instance to an external IP.
-- **Traceroute**: Traceroute can help diagnose where in the network path there may be an issue.
+### Networking Diagnostics
+- **Ping and Traceroute for Connectivity Issues**
 
-#### Resource Clean-Up
-- **Force Delete Stuck Resources**: In some cases, resources like instances or volumes may get stuck. Use `--force` to delete them if standard methods fail.
+### Resource Clean-Up
+- **Force Delete Stuck Resources**
   ```bash
   openstack server delete --force <server-name>
   openstack volume delete --force <volume-name>
   ```
 
 ### Additional Tips
-- **Use the `-f json` or `-f yaml` Flags** for more structured output, especially useful for scripts.
-- **Check for `--help`** on any command for more options and usage details.
-- **Always Check Resource Quotas**: Sometimes issues arise simply because quotas are exceeded. Use `openstack quota show` for this.
-- **Regular Health Checks**: Periodically check the health of OpenStack services with `openstack service list`.
-
-This cheat sheet covers a range of essential commands across various OpenStack services and is a great starting point for administrators. However, depending on your specific OpenStack setup and the tasks you need to perform, there may be additional commands and options that are relevant.
+- **Structured Output with `-f json` or `-f yaml`**
+- **Help Option for Detailed Command Usage**
+- **Quota Checks with `openstack quota show`**
+- **Regular Service Health Checks**
